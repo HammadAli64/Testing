@@ -1,0 +1,10 @@
+Django
+django-cors-headers
+openai-agents
+openai
+pydantic
+python-dotenv
+python-docx
+pypdf
+openpyxl
+

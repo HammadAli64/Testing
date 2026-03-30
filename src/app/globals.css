@@ -1,8 +1,38 @@
 @import "tailwindcss";
 
+html {
+  font-size: 18px;
+}
+
+@font-face {
+  font-family: "Locatro";
+  src: url("/fonts/Locatro.woff2") format("woff2"),
+    url("/fonts/Locatro.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Locatro";
+  src: url("/fonts/Locatro%20Italic.woff2") format("woff2"),
+    url("/fonts/Locatro%20Italic.woff") format("woff");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f5f7ff;
+  --foreground: #0a0f1f;
+  --brand-gold: #be9e4b;
+  --surface: #ffffff;
+  --surface-2: #eef3ff;
+  --grid: rgba(19, 38, 89, 0.09);
+  --neon-cyan: #00e7ff;
+  --neon-violet: #8b5cf6;
+  --neon-lime: #7dffb3;
+  --font-brand: "Locatro";
 }
 
 @theme inline {
@@ -12,15 +42,234 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html.dark {
+  --background: #05070f;
+  --foreground: #dce7ff;
+  --surface: #0b1020;
+  --surface-2: #101a31;
+  --grid: rgba(0, 231, 255, 0.1);
+  --neon-cyan: #31f3ff;
+  --neon-violet: #9f7bff;
+  --neon-lime: #7dffb3;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-synthesis: none;
+  background-image:
+    radial-gradient(circle at 10% 10%, color-mix(in srgb, var(--neon-violet) 12%, transparent) 0, transparent 35%),
+    radial-gradient(circle at 90% 20%, color-mix(in srgb, var(--neon-cyan) 10%, transparent) 0, transparent 38%),
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size:
+    auto,
+    auto,
+    28px 28px,
+    28px 28px;
+  background-attachment: fixed;
+}
+
+/* Optional utility: use custom Locatro only where explicitly needed */
+.font-brand {
+  font-family: var(--font-brand), var(--font-geist-sans), system-ui, sans-serif;
+}
+
+/* Keep light mode clean and high-contrast for readability */
+html:not(.dark) body {
+  background-image: none;
+}
+
+.brand-gold-text {
+  color: var(--brand-gold);
+}
+
+.brand-gold-bg {
+  background-color: var(--brand-gold);
+}
+
+.brand-gold-ring {
+  --tw-ring-color: color-mix(in srgb, var(--brand-gold) 35%, transparent);
+}
+
+.neon-cyan-text {
+  color: var(--neon-cyan);
+}
+
+.neon-cyan-bg {
+  background-color: color-mix(in srgb, var(--neon-cyan) 18%, transparent);
+}
+
+.neon-cyan-ring {
+  --tw-ring-color: color-mix(in srgb, var(--neon-cyan) 42%, transparent);
+}
+
+.neon-cyan-glow {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--neon-cyan) 30%, transparent) inset,
+    0 0 20px color-mix(in srgb, var(--neon-cyan) 18%, transparent);
+}
+
+.cyber-surface {
+  background: color-mix(in srgb, #d9e8ff 28%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--neon-cyan) 14%, #2f3f6a);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--neon-violet) 8%, transparent) inset;
+}
+
+html:not(.dark) .cyber-surface {
+  background: #f2f7ff;
+  border: 1px solid #e4e4e7;
+  box-shadow: none;
+}
+
+html.dark .cyber-surface {
+  background: color-mix(in srgb, #142443 40%, var(--surface));
+}
+
+.date-input-colorful {
+  color-scheme: dark;
+}
+
+html:not(.dark) .date-input-colorful {
+  color-scheme: light;
+}
+
+.date-input-colorful::-webkit-calendar-picker-indicator {
+  opacity: 1;
+  cursor: pointer;
+  filter: invert(71%) sepia(22%) saturate(1302%) hue-rotate(5deg) brightness(90%)
+    contrast(89%);
+}
+
+html.dark .date-input-colorful::-webkit-calendar-picker-indicator {
+  filter: invert(90%) sepia(85%) saturate(4975%) hue-rotate(138deg)
+    brightness(102%) contrast(103%);
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes soft-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--neon-cyan) 0%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--neon-cyan) 10%, transparent);
+  }
+}
+
+.anim-fade-up {
+  animation: fade-up 440ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.anim-delay-1 {
+  animation-delay: 80ms;
+}
+
+.anim-delay-2 {
+  animation-delay: 140ms;
+}
+
+.anim-delay-3 {
+  animation-delay: 200ms;
+}
+
+.hover-lift {
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    filter 220ms ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-3px);
+  filter: saturate(1.03);
+}
+
+.pulse-accent {
+  animation: soft-pulse 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-fade-up,
+  .pulse-accent {
+    animation: none !important;
+  }
+
+  .hover-lift {
+    transition: none !important;
+  }
+
+  .hover-lift:hover {
+    transform: none !important;
+    filter: none !important;
+  }
+}
+
+/* Coach insight: cyan neon space + brighter nebula + star field */
+.coach-space-neon {
+  background-color: #062a38;
+  background-image:
+    linear-gradient(155deg, rgba(34, 211, 238, 0.28) 0%, transparent 45%),
+    linear-gradient(305deg, rgba(6, 182, 212, 0.2) 0%, transparent 40%),
+    radial-gradient(ellipse 110% 85% at 50% -5%, rgba(49, 243, 255, 0.35), transparent 52%),
+    radial-gradient(ellipse 95% 70% at 95% 45%, rgba(34, 211, 238, 0.22), transparent 48%),
+    radial-gradient(ellipse 85% 65% at 5% 75%, rgba(14, 165, 233, 0.2), transparent 46%),
+    radial-gradient(ellipse 100% 60% at 50% 110%, rgba(49, 243, 255, 0.28), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 85% 15%, rgba(159, 123, 255, 0.28), transparent 45%),
+    radial-gradient(ellipse 50% 40% at 12% 35%, rgba(236, 72, 153, 0.12), transparent 42%),
+    radial-gradient(1px 1px at 6% 14%, rgba(255, 255, 255, 0.95), transparent),
+    radial-gradient(1px 1px at 14% 28%, rgba(255, 255, 255, 0.55), transparent),
+    radial-gradient(1px 1px at 22% 9%, rgba(255, 255, 255, 0.75), transparent),
+    radial-gradient(1px 1px at 31% 42%, rgba(255, 255, 255, 0.45), transparent),
+    radial-gradient(1px 1px at 38% 18%, rgba(255, 255, 255, 0.9), transparent),
+    radial-gradient(1px 1px at 45% 55%, rgba(255, 255, 255, 0.35), transparent),
+    radial-gradient(1px 1px at 52% 12%, rgba(255, 255, 255, 0.65), transparent),
+    radial-gradient(1px 1px at 58% 38%, rgba(255, 255, 255, 0.85), transparent),
+    radial-gradient(1px 1px at 66% 22%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 72% 48%, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(1px 1px at 78% 14%, rgba(255, 255, 255, 0.95), transparent),
+    radial-gradient(1px 1px at 84% 32%, rgba(255, 255, 255, 0.6), transparent),
+    radial-gradient(1px 1px at 91% 58%, rgba(255, 255, 255, 0.45), transparent),
+    radial-gradient(1px 1px at 95% 18%, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(1px 1px at 11% 62%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 19% 78%, rgba(255, 255, 255, 0.35), transparent),
+    radial-gradient(1px 1px at 27% 68%, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(1px 1px at 35% 88%, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(1px 1px at 48% 72%, rgba(255, 255, 255, 0.55), transparent),
+    radial-gradient(1px 1px at 61% 82%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 74% 68%, rgba(255, 255, 255, 0.65), transparent),
+    radial-gradient(1px 1px at 88% 76%, rgba(255, 255, 255, 0.45), transparent),
+    radial-gradient(1px 1px at 96% 42%, rgba(255, 255, 255, 0.75), transparent),
+    radial-gradient(1.5px 1.5px at 42% 28%, rgba(49, 243, 255, 0.9), transparent),
+    radial-gradient(1.5px 1.5px at 63% 52%, rgba(159, 123, 255, 0.85), transparent),
+    radial-gradient(1.5px 1.5px at 18% 48%, rgba(236, 72, 153, 0.7), transparent),
+    radial-gradient(1px 1px at 3% 44%, rgba(200, 255, 255, 0.85), transparent),
+    radial-gradient(1px 1px at 8% 52%, rgba(165, 243, 252, 0.6), transparent),
+    radial-gradient(1px 1px at 55% 68%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 68% 8%, rgba(224, 250, 255, 0.9), transparent),
+    radial-gradient(1px 1px at 82% 62%, rgba(103, 232, 249, 0.55), transparent),
+    radial-gradient(1px 1px at 40% 92%, rgba(255, 255, 255, 0.45), transparent),
+    radial-gradient(1px 1px at 29% 5%, rgba(207, 250, 254, 0.75), transparent),
+    radial-gradient(1.5px 1.5px at 50% 40%, rgba(103, 232, 249, 0.95), transparent),
+    radial-gradient(1px 1px at 73% 92%, rgba(165, 243, 252, 0.65), transparent);
+  border: 1px solid color-mix(in srgb, var(--neon-cyan) 58%, rgba(15, 40, 55, 0.9));
+  box-shadow:
+    0 0 28px color-mix(in srgb, var(--neon-cyan) 42%, transparent),
+    0 0 64px color-mix(in srgb, var(--neon-cyan) 22%, transparent),
+    0 0 88px color-mix(in srgb, var(--neon-violet) 18%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 0 100px rgba(34, 211, 238, 0.09);
 }
